@@ -1,0 +1,40 @@
+{
+  "name": "react-use-promise-state",
+  "version": "0.1.0",
+  "main": "usePromiseState.js",
+  "files": [
+    "usePromiseState.js",
+    "usePromiseState.ts"
+  ],
+  "scripts": {
+    "prepare": "esbuild usePromiseState.ts --platform=neutral --format=cjs --outfile=usePromiseState.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stefee/use-promise-state.git"
+  },
+  "author": "Stef Jones <stef@srilq.email>",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/stefee/use-promise-state/issues"
+  },
+  "homepage": "https://github.com/stefee/use-promise-state#readme",
+  "peerDependencies": {
+    "react": "16.x.x || 17.x.x"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^26.0.24",
+    "@types/react": "^17.0.15",
+    "esbuild": "^0.12.17",
+    "jest": "^27.0.6",
+    "jest-junit": "^12.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "ts-jest": "^27.0.4",
+    "typescript": "^4.3.5"
+  }
+}
