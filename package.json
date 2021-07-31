@@ -48,7 +48,6 @@
   },
   "prettier": {
     "$schema": "http://json.schemastore.org/prettierrc",
-    "printWidth": 100,
     "bracketSpacing": false,
     "trailingComma": "all"
   }

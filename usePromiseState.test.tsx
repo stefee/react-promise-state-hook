@@ -8,7 +8,9 @@ const getMockComponentStates = (promise: () => Promise<string>) => {
   const states: PromiseState<string, unknown>[] = [];
   const unmountObj: {unmount: () => void} = {unmount: () => undefined};
   const Component = () => {
-    const [call, current, unmount] = usePromiseState(promise, {onError: () => undefined});
+    const [call, current, unmount] = usePromiseState(promise, {
+      onError: () => undefined,
+    });
     unmountObj.unmount = unmount;
     states.push({...current});
     return <button onClick={call}>Click Me</button>;
@@ -41,7 +43,9 @@ it("passes parameters through to the wrapper function", async () => {
   };
   render(<Component />);
   userEvent.click(screen.getByRole("button"));
-  await waitFor(() => expect(screen.queryByText("The values are 42 and 43")).toBeInTheDocument());
+  await waitFor(() =>
+    expect(screen.queryByText("The values are 42 and 43")).toBeInTheDocument(),
+  );
 });
 
 it("is generic over the resolved type", async () => {
@@ -62,7 +66,9 @@ it("is generic over the resolved type", async () => {
   render(<Component />);
 
   userEvent.click(screen.getByRole("button"));
-  await waitFor(() => expect(screen.queryByText("Value is 42.000")).toBeInTheDocument());
+  await waitFor(() =>
+    expect(screen.queryByText("Value is 42.000")).toBeInTheDocument(),
+  );
 });
 
 it("returns correct state on success", async () => {
