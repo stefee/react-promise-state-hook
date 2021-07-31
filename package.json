@@ -21,6 +21,23 @@
     "url": "https://github.com/stefee/react-promise-state-hook/issues"
   },
   "homepage": "https://github.com/stefee/react-promise-state-hook#readme",
+  "keywords": [
+    "react",
+    "reactive",
+    "hook",
+    "state",
+    "status",
+    "asynchronous",
+    "async",
+    "await",
+    "promise",
+    "promiseful",
+    "resolved",
+    "handler",
+    "handling",
+    "error",
+    "actions"
+  ],
   "peerDependencies": {
     "react": "16.x.x || 17.x.x"
   },
