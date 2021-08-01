@@ -1,6 +1,6 @@
 # react-promise-state-hook
 
-The `usePromiseState` hook helps with handling asynchronous UI actions by providing a React state object for a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) returned from a given function, including its **status** (`NOT_STARTED`, `PENDING`, `FULFILLED` or `REJECTED`) and its **resolved** or **rejected** value.
+The `usePromiseState` hook helps with handling asynchronous UI actions by providing a React state object for a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) returned from a given function, including its **status** (`NOT_STARTED`, `PENDING`, `FULFILLED` or `REJECTED`) and its **resolved** or **rejected** value. The API is heavily inspired by [Apollo GraphQL `useQuery` hook](https://www.apollographql.com/docs/react/data/queries/).
 
 Install:
 
