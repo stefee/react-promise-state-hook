@@ -20,7 +20,7 @@ const MyApp = () => {
   const [fetchCustomer, fetchCustomerState] = usePromiseState(
     React.useCallback(async () => {
       // do asynchronous stuff here
-    }),
+    }, []),
   );
 
   if (fetchCustomerState.status === PromiseStatus.FULFILLED) {
@@ -43,7 +43,7 @@ const MyApp = () => {
 };
 ```
 
-## Options
+## Options
 
 By default, any errors thrown by an async callback will be caught and logged using [`console.error`](https://developer.mozilla.org/en-US/docs/Web/API/console/error).
 
@@ -63,7 +63,7 @@ export const usePromiseState = createUsePromiseState({onError: handleError});
 const [fetchCustomer, fetchCustomerState] = usePromiseState(
   React.useCallback(async () => {
     // do asynchronous stuff here
-  }),
+  }, []),
 );
 ```
 
@@ -73,7 +73,7 @@ You can override the `onError` handler when calling `usePromiseState`:
 const [fetchCustomer, fetchCustomerState] = usePromiseState(
   React.useCallback(async () => {
     // do asynchronous stuff here
-  }),
+  }, []),
   {
     onError: (error: unknown) => {
       // do error reporting here
