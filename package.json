@@ -1,6 +1,6 @@
 {
   "name": "react-promise-state-hook",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "main": "usePromiseState.js",
   "files": [
     "usePromiseState.js",
