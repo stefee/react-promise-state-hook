@@ -1,6 +1,6 @@
 # react-promise-state-hook
 
-The `usePromiseState` hook helps with handling asynchronous UI actions by providing a React state object for a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) returned by a given function, including its **status** (`NOT_STARTED`, `PENDING`, `FULFILLED` or `REJECTED`) and its **resolved** or **rejected** value.
+The `usePromiseState` hook helps with handling asynchronous UI actions by providing a React state object for a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) returned from a given function, including its **status** (`NOT_STARTED`, `PENDING`, `FULFILLED` or `REJECTED`) and its **resolved** or **rejected** value.
 
 Install:
 
@@ -12,7 +12,7 @@ Alternatively, you may copy [the source code](https://github.com/stefee/react-pr
 
 Usage example:
 
-```jsx
+```tsx
 import * as React from "react";
 import {usePromiseState, PromiseStatus} from "react-promise-state-hook";
 
@@ -21,7 +21,6 @@ const MyApp = () => {
     React.useCallback(async () => {
       // do asynchronous stuff here
     }),
-    {onError: console.error},
   );
 
   if (fetchCustomerState.status === PromiseStatus.FULFILLED) {
@@ -44,18 +43,41 @@ const MyApp = () => {
 };
 ```
 
-You may also use the factory method to avoid repeating the second argument on each usage:
+## Options
 
-```jsx
+By default, any errors thrown by an async callback will be caught and logged using [`console.error`](https://developer.mozilla.org/en-US/docs/Web/API/console/error).
+
+The `createUsePromiseState` function allows you to set a custom `onError` handler:
+
+```tsx
 import {createUsePromiseState} from "react-promise-state-hook";
 
-export const usePromiseState = createUsePromiseState({onError: console.error});
+const handleError = (error: unknown) => {
+  // do error reporting here
+};
+
+export const usePromiseState = createUsePromiseState({onError: handleError});
 ```
 
-```jsx
+```tsx
 const [fetchCustomer, fetchCustomerState] = usePromiseState(
   React.useCallback(async () => {
     // do asynchronous stuff here
   }),
+);
+```
+
+You can override the `onError` handler when calling `usePromiseState`:
+
+```tsx
+const [fetchCustomer, fetchCustomerState] = usePromiseState(
+  React.useCallback(async () => {
+    // do asynchronous stuff here
+  }),
+  {
+    onError: (error: unknown) => {
+      // do error reporting here
+    },
+  },
 );
 ```

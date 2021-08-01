@@ -83,7 +83,7 @@ const promiseStateReducer = <Resolved, Rejected>(
  */
 export const usePromiseState = <Params extends unknown[], Resolved>(
   asyncFn: (...params: Params) => Promise<Resolved>,
-  {onError}: {onError: (err: unknown) => void},
+  {onError = console.error}: {onError?: (err: unknown) => void} = {},
 ): [
   (...params: Params) => Promise<void>,
   PromiseState<Resolved, unknown>,
@@ -139,9 +139,10 @@ export const usePromiseState = <Params extends unknown[], Resolved>(
  * Create a {@link usePromiseState} hook with predefined options.
  */
 export const createUsePromiseState =
-  (options: {onError: (err: unknown) => void}) =>
+  (predefinedOptions: {onError?: (err: unknown) => void}) =>
   <Params extends unknown[], Resolved>(
     asyncFn: (...params: Params) => Promise<Resolved>,
+    options = predefinedOptions,
   ): [
     (...params: Params) => Promise<void>,
     PromiseState<Resolved, unknown>,
