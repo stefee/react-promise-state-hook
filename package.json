@@ -2,12 +2,14 @@
   "name": "react-promise-state-hook",
   "version": "0.2.0",
   "main": "usePromiseState.js",
+  "browser": "usePromiseState.min.js",
   "files": [
     "usePromiseState.js",
+    "usePromiseState.min.js",
     "usePromiseState.ts"
   ],
   "scripts": {
-    "prepare": "esbuild usePromiseState.ts --platform=neutral --format=cjs --outfile=usePromiseState.js",
+    "prepare": "./build.sh",
     "test": "jest",
     "lint": "eslint *.ts *.tsx && prettier --check *.ts *.tsx"
   },
