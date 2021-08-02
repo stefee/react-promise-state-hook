@@ -8,7 +8,7 @@ Install:
 npm install react-promise-state-hook
 ```
 
-Alternatively, you may copy [the source code](https://github.com/stefee/react-promise-state-hook/blob/main/usePromiseState.ts) directly into your project as this library is published under The Unlicense.
+Alternatively, you may copy [the source code](https://github.com/stefee/react-promise-state-hook/blob/main/usePromiseState.ts) directly into your project as this library is published under the Unlicense license.
 
 Usage example:
 
