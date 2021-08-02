@@ -6,19 +6,16 @@ import {usePromiseState, PromiseState, PromiseStatus} from "./usePromiseState";
 
 const getMockComponentStates = (promise: () => Promise<string>) => {
   const states: PromiseState<string, unknown>[] = [];
-  const unmountObj: {unmount: () => void} = {unmount: () => undefined};
   const Component = () => {
-    const [call, current, unmount] = usePromiseState(promise, {
+    const [call, current] = usePromiseState(promise, {
       onError: () => undefined,
     });
-    unmountObj.unmount = unmount;
     states.push({...current});
     return <button onClick={call}>Click Me</button>;
   };
   render(<Component />);
   return {
     states,
-    unmount: unmountObj.unmount,
     callAction: () => userEvent.click(screen.getByRole("button")),
   };
 };
@@ -128,31 +125,47 @@ it("returns correct state on failure", async () => {
   ]);
 });
 
-it("doesn't set status after hook is unmounted", async () => {
-  const promise = jest.fn(async () => {
-    await new Promise((res) => setTimeout(res, 100));
-    return "Success";
-  });
-  const {states, callAction, unmount} = getMockComponentStates(promise);
+it("doesn't set status after component is unmounted", async () => {
+  const states: PromiseState<string, unknown>[] = [];
+  const ComponentChild = ({
+    unmountComponent,
+  }: {
+    unmountComponent: () => void;
+  }) => {
+    const [call, current] = usePromiseState(
+      React.useCallback(async () => {
+        await new Promise((res) => setTimeout(res, 100));
+        unmountComponent();
+        return "Success";
+      }, [unmountComponent]),
+      {
+        onError: () => undefined,
+      },
+    );
+    states.push({...current});
+    return <button onClick={call}>Click Me</button>;
+  };
+  const ComponentParent = () => {
+    const [renderChild, setRenderChild] = React.useState<boolean>(true);
+    const unmountComponent = React.useCallback(() => {
+      setRenderChild(false);
+    }, [setRenderChild]);
+    return renderChild ? (
+      <ComponentChild unmountComponent={unmountComponent} />
+    ) : (
+      <div>Unmounted</div>
+    );
+  };
+  render(<ComponentParent />);
 
-  callAction();
-  await waitFor(() => expect(states).toHaveLength(3));
-  expect(promise).toHaveBeenCalledTimes(1);
+  userEvent.click(screen.getByRole("button"));
+  await waitFor(() =>
+    expect(screen.getByText("Unmounted")).toBeInTheDocument(),
+  );
+  await waitFor(() => expect(states).toHaveLength(2));
   expect(states).toEqual([
     {status: PromiseStatus.NOT_STARTED, err: null, value: null},
     {status: PromiseStatus.PENDING, err: null, value: null},
-    {status: PromiseStatus.FULFILLED, err: null, value: "Success"},
-  ]);
-
-  unmount();
-
-  callAction();
-  await waitFor(() => expect(states).toHaveLength(3));
-  expect(promise).toHaveBeenCalledTimes(2);
-  expect(states).toEqual([
-    {status: PromiseStatus.NOT_STARTED, err: null, value: null},
-    {status: PromiseStatus.PENDING, err: null, value: null},
-    {status: PromiseStatus.FULFILLED, err: null, value: "Success"},
   ]);
 });
 

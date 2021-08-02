@@ -84,16 +84,14 @@ const promiseStateReducer = <Resolved, Rejected>(
 export const usePromiseState = <Params extends unknown[], Resolved>(
   asyncFn: (...params: Params) => Promise<Resolved>,
   {onError = console.error}: {onError?: (err: unknown) => void} = {},
-): [
-  (...params: Params) => Promise<void>,
-  PromiseState<Resolved, unknown>,
-  () => void,
-] => {
+): [(...params: Params) => Promise<void>, PromiseState<Resolved, unknown>] => {
   const isPending = React.useRef<boolean>(false);
   const isMounted = React.useRef<boolean>(true);
 
-  const unmount = React.useCallback(() => {
-    isMounted.current = false;
+  React.useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   const [result, dispatch] = React.useReducer<
@@ -132,7 +130,7 @@ export const usePromiseState = <Params extends unknown[], Resolved>(
     [asyncFn, onError],
   );
 
-  return [call, result, unmount];
+  return [call, result];
 };
 
 /**
@@ -143,9 +141,5 @@ export const createUsePromiseState =
   <Params extends unknown[], Resolved>(
     asyncFn: (...params: Params) => Promise<Resolved>,
     options = predefinedOptions,
-  ): [
-    (...params: Params) => Promise<void>,
-    PromiseState<Resolved, unknown>,
-    () => void,
-  ] =>
+  ): [(...params: Params) => Promise<void>, PromiseState<Resolved, unknown>] =>
     usePromiseState(asyncFn, options);
