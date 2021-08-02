@@ -10,6 +10,13 @@ export enum PromiseStatus {
   FULFILLED,
 }
 
+/**
+ * The possible result states as returned by {@link usePromiseState} are expressed by this type.
+ *
+ * This is useful for "type narrowing" in TypeScript usages. For example, if `result.status`
+ * is `PromiseStatus.FULFILLED` then the type of `result.value` can be inferred as a
+ * concrete type (the return type of the async callback).
+ */
 export type PromiseState<Resolved, Rejected> =
   | {
       status: PromiseStatus.NOT_STARTED;
@@ -69,17 +76,12 @@ const promiseStateReducer = <Resolved, Rejected>(
  * object with the state of the promise returned from the function (NOT_STARTED, PENDING, FULFILLED,
  * REJECTED) and its resolved value or rejected value.
  *
- * The hook will update component state every time the promise status changes. The `unmount`
- * function can be called to prevent any future state updates from happening. This is useful if
- * the given async function needs to unmount a parent component, since any subsequent state
- * updates to the unmounted component would cause an error.
- *
  * The given async function can be memoized across renders using React.useCallback to prevent
  * unnecessary renders. If the function is not memoized, the returned wrapper function will have
  * a different identity on every render.
  *
- * Note, the returned wrapper function is de-bounced across calls, meaning if it is called twice
- * without waiting for the first call to complete, the second call will have no effect.
+ * The returned wrapper function is de-bounced across calls, meaning if it is called twice without
+ * waiting for the first call to complete, the second call will have no effect.
  */
 export const usePromiseState = <Params extends unknown[], Resolved>(
   asyncFn: (...params: Params) => Promise<Resolved>,
@@ -134,7 +136,7 @@ export const usePromiseState = <Params extends unknown[], Resolved>(
 };
 
 /**
- * Create a {@link usePromiseState} hook with predefined options.
+ * Create a {@link usePromiseState} hook with predefined default options.
  */
 export const createUsePromiseState =
   (predefinedOptions: {onError?: (err: unknown) => void}) =>
