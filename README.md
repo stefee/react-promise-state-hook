@@ -75,9 +75,9 @@ const [fetchCustomer, fetchCustomerState] = usePromiseState(
     // do asynchronous stuff here
   }, []),
   {
-    onError: (error: unknown) => {
+    onError: React.useCallback((error: unknown) => {
       // do error reporting here
-    },
+    }, []),
   },
 );
 ```
