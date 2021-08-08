@@ -1,6 +1,6 @@
 # react-promise-state-hook
 
-The `usePromiseState` hook helps with handling asynchronous UI actions by providing a React state object for a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) returned from a given function, including its **status** (`NOT_STARTED`, `PENDING`, `FULFILLED` or `REJECTED`) and its **resolved** or **rejected** value. The API is heavily inspired by [Apollo GraphQL `useQuery` hook](https://www.apollographql.com/docs/react/data/queries/).
+The `usePromiseState` hook provides you with React state for a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) returned from an async function, including its **status** (`NOT_STARTED`, `PENDING`, `FULFILLED` or `REJECTED`) and its **resolved** or **rejected** value. The API is heavily inspired by [Apollo GraphQL `useQuery` hook](https://www.apollographql.com/docs/react/data/queries/).
 
 Install:
 
@@ -19,7 +19,7 @@ import {usePromiseState, PromiseStatus} from "react-promise-state-hook";
 const MyApp = () => {
   const [fetchCustomer, fetchCustomerState] = usePromiseState(
     React.useCallback(async () => {
-      // do asynchronous stuff here
+      // Do asynchronous stuff here.
     }, []),
   );
 
@@ -36,7 +36,7 @@ const MyApp = () => {
         Start
       </button>
       {fetchCustomerState.status === PromiseStatus.REJECTED && (
-        <div>Error: {fetchCustomerState.err}</div>
+        <div>Error: {fetchCustomerState.err.message}</div>
       )}
     </div>
   );
@@ -53,7 +53,7 @@ The `createUsePromiseState` function allows you to set a custom `onError` handle
 import {createUsePromiseState} from "react-promise-state-hook";
 
 const handleError = (error: unknown) => {
-  // do error reporting here
+  // Do error reporting here.
 };
 
 export const usePromiseState = createUsePromiseState({onError: handleError});
@@ -62,7 +62,7 @@ export const usePromiseState = createUsePromiseState({onError: handleError});
 ```tsx
 const [fetchCustomer, fetchCustomerState] = usePromiseState(
   React.useCallback(async () => {
-    // do asynchronous stuff here
+    // Do asynchronous stuff here.
   }, []),
 );
 ```
@@ -72,11 +72,11 @@ You can override the `onError` handler when calling `usePromiseState`:
 ```tsx
 const [fetchCustomer, fetchCustomerState] = usePromiseState(
   React.useCallback(async () => {
-    // do asynchronous stuff here
+    // Do asynchronous stuff here.
   }, []),
   {
     onError: React.useCallback((error: unknown) => {
-      // do error reporting here
+      // Do error reporting here.
     }, []),
   },
 );

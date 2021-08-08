@@ -23,6 +23,7 @@
     "url": "https://github.com/stefee/react-promise-state-hook/issues"
   },
   "homepage": "https://github.com/stefee/react-promise-state-hook#readme",
+  "description": "A simple React hook that provides state for async actions.",
   "keywords": [
     "react",
     "reactive",
