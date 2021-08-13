@@ -51,24 +51,24 @@ export type PromiseState<Resolved, Rejected> =
 
 const promiseStateReducer = <Resolved, Rejected>(
   prev: PromiseState<Resolved, Rejected>,
-  next: PromiseState<Resolved, Rejected>,
+  next: PromiseState<Resolved, Rejected>
 ): PromiseState<Resolved, Rejected> => {
   if (next.status === PromiseStatus.PENDING) {
     if (prev.status === PromiseStatus.REJECTED) {
-      return {status: next.status, value: null, err: prev.err};
+      return { status: next.status, value: null, err: prev.err };
     } else if (prev.status === PromiseStatus.FULFILLED) {
-      return {status: next.status, value: prev.value, err: null};
+      return { status: next.status, value: prev.value, err: null };
     } else {
-      return {status: next.status, value: null, err: null};
+      return { status: next.status, value: null, err: null };
     }
   }
   if (next.status === PromiseStatus.REJECTED) {
-    return {status: next.status, value: null, err: next.err};
+    return { status: next.status, value: null, err: next.err };
   }
   if (next.status === PromiseStatus.FULFILLED) {
-    return {status: next.status, value: next.value, err: null};
+    return { status: next.status, value: next.value, err: null };
   }
-  return {status: PromiseStatus.NOT_STARTED, value: null, err: null};
+  return { status: PromiseStatus.NOT_STARTED, value: null, err: null };
 };
 
 /**
@@ -85,7 +85,7 @@ const promiseStateReducer = <Resolved, Rejected>(
  */
 export const usePromiseState = <Params extends unknown[], Resolved>(
   asyncFn: (...params: Params) => Promise<Resolved>,
-  {onError = console.error}: {onError?: (err: unknown) => void} = {},
+  { onError = console.error }: { onError?: (err: unknown) => void } = {}
 ): [(...params: Params) => Promise<void>, PromiseState<Resolved, unknown>] => {
   const isPending = React.useRef<boolean>(false);
   const isMounted = React.useRef<boolean>(true);
@@ -99,7 +99,7 @@ export const usePromiseState = <Params extends unknown[], Resolved>(
   const [result, dispatch] = React.useReducer<
     (
       prev: PromiseState<Resolved, unknown>,
-      next: PromiseState<Resolved, unknown>,
+      next: PromiseState<Resolved, unknown>
     ) => PromiseState<Resolved, unknown>
   >(promiseStateReducer, {
     status: PromiseStatus.NOT_STARTED,
@@ -114,22 +114,22 @@ export const usePromiseState = <Params extends unknown[], Resolved>(
       }
       isPending.current = true;
       if (isMounted.current) {
-        dispatch({status: PromiseStatus.PENDING, value: null, err: null});
+        dispatch({ status: PromiseStatus.PENDING, value: null, err: null });
       }
       try {
         const value = await asyncFn(...params);
         if (isMounted.current) {
-          dispatch({status: PromiseStatus.FULFILLED, value, err: null});
+          dispatch({ status: PromiseStatus.FULFILLED, value, err: null });
         }
       } catch (err: unknown) {
         onError(err);
         if (isMounted.current) {
-          dispatch({status: PromiseStatus.REJECTED, value: null, err});
+          dispatch({ status: PromiseStatus.REJECTED, value: null, err });
         }
       }
       isPending.current = false;
     },
-    [asyncFn, onError],
+    [asyncFn, onError]
   );
 
   return [call, result];
@@ -139,9 +139,9 @@ export const usePromiseState = <Params extends unknown[], Resolved>(
  * Create a {@link usePromiseState} hook with predefined default options.
  */
 export const createUsePromiseState =
-  (predefinedOptions: {onError?: (err: unknown) => void}) =>
+  (predefinedOptions: { onError?: (err: unknown) => void }) =>
   <Params extends unknown[], Resolved>(
     asyncFn: (...params: Params) => Promise<Resolved>,
-    options = predefinedOptions,
+    options = predefinedOptions
   ): [(...params: Params) => Promise<void>, PromiseState<Resolved, unknown>] =>
     usePromiseState(asyncFn, options);
