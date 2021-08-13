@@ -6,7 +6,7 @@
     "moduleResolution": "node",
     "lib": ["es6", "dom", "dom.iterable"],
     "allowJs": false,
-    "jsx": "preserve",
+    "jsx": "react",
     "strict": true,
     "esModuleInterop": true,
     "isolatedModules": true,
