@@ -1,12 +1,14 @@
 {
   "name": "react-promise-state-hook",
   "version": "0.3.3",
-  "main": "usePromiseState.js",
-  "browser": "usePromiseState.min.js",
+  "main": "usePromiseState.dist.js",
+  "browser": "usePromiseState.dist.min.js",
+  "types": "usePromiseState.d.ts",
   "files": [
-    "usePromiseState.js",
-    "usePromiseState.min.js",
-    "usePromiseState.ts"
+    "usePromiseState.dist.js",
+    "usePromiseState.dist.min.js",
+    "usePromiseState.ts",
+    "usePromiseState.d.ts"
   ],
   "scripts": {
     "prepare": "./build.sh",

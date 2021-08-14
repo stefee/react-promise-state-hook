@@ -1,3 +1,5 @@
 node_modules
-usePromiseState.js
-usePromiseState.min.js
+
+usePromiseState.dist.js
+usePromiseState.dist.min.js
+*.d.ts
