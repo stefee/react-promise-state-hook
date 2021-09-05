@@ -3,20 +3,18 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:prettier/recommended",
     "plugin:jest/recommended",
     "plugin:jest/style",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended"
   ],
-  "env": {
-    "es6": true,
-    "node": true,
-    "jest/globals": true
+  "parserOptions": {
+    "project": "./tsconfig.json"
   },
+  "reportUnusedDisableDirectives": true,
   "rules": {
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-implicit-any-catch": "error",
     "react-hooks/exhaustive-deps": "error"
   },
   "settings": {

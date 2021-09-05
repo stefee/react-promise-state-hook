@@ -27,6 +27,7 @@ const getMockComponentStates = (promise: () => Promise<string>) => {
 it("passes parameters through to the wrapper function", async () => {
   const Component = () => {
     const [call, state] = usePromiseState(
+      // eslint-disable-next-line @typescript-eslint/require-await
       async (val1: number, val2: number) => {
         return { val1, val2 };
       },
