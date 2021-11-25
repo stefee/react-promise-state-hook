@@ -15,7 +15,8 @@
   },
   "reportUnusedDisableDirectives": true,
   "rules": {
-    "react-hooks/exhaustive-deps": "error"
+    "react-hooks/exhaustive-deps": "error",
+    "@typescript-eslint/require-await": "off"
   },
   "settings": {
     "react": {
